@@ -152,7 +152,7 @@ define :mongodb_instance,
     variables(
       sysconfig: new_resource.sysconfig_vars
     )
-    notifies new_resource.reload_action, "service[#{new_resource.name}]"
+    notifies new_resource.reload_action, "service[#{new_resource.name}-service]"
   end
 
   # config file
@@ -166,7 +166,7 @@ define :mongodb_instance,
     )
     helpers MongoDBConfigHelpers
     mode '0644'
-    notifies new_resource.reload_action, "service[#{new_resource.name}]"
+    notifies new_resource.reload_action, "service[#{new_resource.name}-service]"
   end
 
   # log dir [make sure it exists]
@@ -211,7 +211,7 @@ define :mongodb_instance,
       bind_ip: new_resource.bind_ip,
       port: new_resource.port
     )
-    notifies new_resource.reload_action, "service[#{new_resource.name}]"
+    notifies new_resource.reload_action, "service[#{new_resource.name}-service]"
 
     if (platform_family?('rhel') && node['platform'] != 'amazon' && node['platform_version'].to_i >= 7) || (node['platform'] == 'debian' && node['platform_version'].to_i >= 8)
       notifies :run, "execute[mongodb-systemctl-daemon-reload-#{new_resource.name}]", :immediately
@@ -219,7 +219,8 @@ define :mongodb_instance,
   end
 
   # service
-  service new_resource.name do
+  service "#{new_resource.name}-service" do
+    service_name new_resource.name
     supports status: true, restart: true
     action new_resource.service_action
     new_resource.service_notifies.each do |service_notify|
