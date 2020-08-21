@@ -26,7 +26,7 @@ include_recipe 'sc-mongodb::mongodb_org_repo' if node['mongodb']['install_method
 
 # TODO: still need all of the tools?
 # yum_package[autoconf, bison, flex, gcc, gcc-c++, gettext, kernel-devel, make, m4, ncurses-devel, patch]
-build_essential 'build-tools'
+build_essential
 
 config_type = node['mongodb']['is_mongos'] ? 'mongos' : 'mongod'
 

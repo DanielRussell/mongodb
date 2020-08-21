@@ -112,10 +112,6 @@ describe 'sc-mongodb::default' do
         chef_run
       end
 
-      it 'should install "build-tools" build_essential' do
-        expect(chef_run).to install_build_essential('build-tools')
-      end
-
       it 'should create sysconfig install template' do
         expect(chef_run).to create_file_if_missing("#{mongod_sysconfig_file} install").with(
           path: mongod_sysconfig_file,
