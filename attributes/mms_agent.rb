@@ -14,7 +14,7 @@ default['mongodb']['mms_agent']['automation']['config']['logLevel'] = 'INFO'
 default['mongodb']['mms_agent']['automation']['config']['maxLogFiles'] = 10
 default['mongodb']['mms_agent']['automation']['config']['maxLogFileSize'] = 268435456
 case node['platform_family']
-when 'rhel', 'fedora'
+when 'rhel', 'fedora', 'amazon'
   default['mongodb']['mms_agent']['automation']['user'] = 'mongod'
   default['mongodb']['mms_agent']['automation']['group'] = 'mongod'
 else
